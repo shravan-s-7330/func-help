@@ -56,26 +56,26 @@ function getFunctionHelp (func, isWindowFunctions) {
     const input = getInputData(func);
     const output = getOutputData(func);
 
-    const wrapper = createElement('div', { class: 'zsl_formula_helpcontent' });
+    var wrapper = createElement('div', { class: 'formula_formula_helpcontent' });
 
     if (syntax) {
         wrapper.appendChild(
-            createElement('div', { class: 'zsl_formula_helpsection' }, [
-                createElement('span', { class: 'zsl_f14_bold' }, i18nUtil('zs.client.common.syntax')),
-                createElement('span', { class: 'zsl_formula_helpsyntax' }, syntax),
-                createElement('p', { class: 'zsl_mT10' }, i18nUtil('zs.client.dataprep.js.fnhelp.' + func.funcName + '.desc'))
+            createElement('div', { class: 'formula_helpsection' }, [
+                createElement('span', { class: 'f14_bold' }, 'Syntax'),
+                createElement('span', { class: 'formula_helpsyntax' }, syntax),
+                createElement('p', { class: 'mT10' }, func.description)
             ])
         );
     }
 
     if (params) {
         wrapper.appendChild(
-            createElement('div', { class: 'zsl_formula_helpsection' }, [
-                createElement('span', { class: 'zsl_f14_bold' }, i18nUtil('zs.client.import.datasource.url.params')),
-                createElement('table', { class: 'zsl_formula_helpparams' }, createElement('tbody', {}, [
+            createElement('div', { class: 'formula_helpsection' }, [
+                createElement('span', { class: 'f14_bold' }, 'Parameters'),
+                createElement('table', { class: 'formula_helpparams' }, createElement('tbody', {}, [
                     createElement('tr', {}, [
-                        createElement('th', {}, i18nUtil('zs.client.common.js.name')),
-                        createElement('th', {}, i18nUtil('zs.client.common.js.description'))
+                        createElement('th', {}, 'Name'),
+                        createElement('th', {}, 'Description')
                     ]),
                     params
                 ]))
@@ -85,23 +85,23 @@ function getFunctionHelp (func, isWindowFunctions) {
 
     if (example) {
         wrapper.appendChild(
-            createElement('div', { class: 'zsl_formula_helpsection' }, [
-                createElement('div', { class: 'zsl_f14_bold' }, i18nUtil('zs.client.common.example')),
-                createElement('div', { class: 'zsl_mT5' }, example)
+            createElement('div', { class: 'formula_helpsection' }, [
+                createElement('div', { class: 'f14_bold' }, 'Example'),
+                createElement('div', { class: 'mT5' }, example)
             ])
         );
     }
 
     if (input && output) {
         wrapper.appendChild(
-            createElement('div', { class: 'zsl_formula_helpsection zsl_disF_spaceBetween' }, [
-                createElement('div', { class: 'zsl_per40' }, [
-                    createElement('div', { class: 'zsl_f14_bold' }, i18nUtil('zs.client.common.input')),
-                    createElement('div', { class: 'zsl_mT5' }, input)
+            createElement('div', { class: 'formula_helpsection disF_spaceBetween' }, [
+                createElement('div', { style: 'width: 40%' }, [
+                    createElement('div', { class: 'f14_bold' }, 'Input'),
+                    createElement('div', { class: 'mT5' }, input)
                 ]),
-                createElement('div', { class: 'zsl_per58' }, [
-                    createElement('div', { class: 'zsl_f14_bold' }, i18nUtil('zs.client.dataprep.js.transform.languagedetection.output')),
-                    createElement('div', { class: 'zsl_mT5' }, output)
+                createElement('div', { style: 'width: 58%' }, [
+                    createElement('div', { class: 'f14_bold' }, 'Output'),
+                    createElement('div', { class: 'mT5' }, output)
                 ])
             ])
         );
@@ -111,16 +111,17 @@ function getFunctionHelp (func, isWindowFunctions) {
 }
 
 function getSyntax (func) {
-    const params = func.argTypes;
+    var params = func.argTypes;
+	var displayName = func.funcName;
 
-    const fragment = document.createDocumentFragment();
+    var fragment = document.createDocumentFragment();
 
     if (params.length > 0) {
-        const paramsfragment = document.createDocumentFragment();
+        var paramsfragment = document.createDocumentFragment();
 
-        for (let i = 0, len = params.length; i < len; i++) {
-            const param = params[i].argName;
-            const columnClass = (i === 0 ? '' : 'zsl_mL5 ') + 'cm-column';
+        for (var i = 0, len = params.length; i < len; i++) {
+            var param = params[i].argName;
+            var columnClass = (i === 0 ? '' : 'mL5 ') + 'cm-column';
 
             paramsfragment.appendChild(createElement('span', { class: columnClass }, param));
 
@@ -133,15 +134,15 @@ function getSyntax (func) {
 
         paramsfragment.lastChild.remove();
 
-        fragment.appendChild(createElement('span', { class: 'cm-function' }, func.funcName));
+        fragment.appendChild(createElement('span', { class: 'cm-function' }, displayName));
         fragment.appendChild(createElement('span', {}, '('));
         fragment.appendChild(createElement('span', {}, paramsfragment));
         fragment.appendChild(createElement('span', {}, ')'));
 
         return fragment;
     } else {
-        if (func.funcName) {
-            fragment.appendChild(createElement('span', { class: 'cm-function' }, func.funcName));
+        if (displayName) {
+            fragment.appendChild(createElement('span', { class: 'cm-function' }, displayName));
             fragment.appendChild(createElement('span', {}, '()'));
 
             return fragment;
@@ -152,24 +153,24 @@ function getSyntax (func) {
 }
 
 function getParameters (func) {
-    const params = func.argTypes;
+    var params = func.argTypes;
 
     if (params.length > 0) {
-        const fragment = document.createDocumentFragment();
+        var fragment = document.createDocumentFragment();
 
-        for (let i = 0, len = params.length; i < len; i++) {
-            const param = params[i];
-            let description = i18nUtil('zs.client.dataprep.js.fnhelp.' + func.funcName + '.param.' + i + '.' + param.argName + '.desc');
+        for (var i = 0, len = params.length; i < len; i++) {
+            var param = params[i];
+            var description = param.argDesc;
 
             if (param.isOptional) {
-                description = '<b>' + i18nUtil('zs.client.dataprep.js.formula.optional') + '</b> ' + description;
+                description = '<b>[Optional]</b> ' + description;
             }
 
             fragment.appendChild(
                 createElement('tr', {}, [
                     createElement('td', {}, [
                         createElement('p', {}, param.argName),
-                        createElement('p', { class: 'zsl_text_batch_bg' }, FUNCTIONSHELP_ARGTYPE[param.argType])
+                        createElement('p', { class: 'text_batch_bg' }, FUNCTIONSHELP_ARGTYPE[param.argType])
                     ]),
                     createElement('td', {}, description)
                 ])
@@ -184,26 +185,25 @@ function getParameters (func) {
 
 function getExample (func, isWindowFunctions) {
     if (func.examples) {
-        const examples = func.examples;
-        const columns = examples.columns;
-        const functions = examples.functions;
+        var examples = func.examples;
+        var columns = examples.columns;
+        var functions = examples.functions;
 
-        const fragment1 = document.createDocumentFragment();
-        const fragment2 = document.createDocumentFragment();
-        const fragment3 = document.createDocumentFragment();
+        var fragment1 = document.createDocumentFragment();
+        var fragment2 = document.createDocumentFragment();
+        var fragment3 = document.createDocumentFragment();
 
         if (columns && columns.length > 0) {
-            for (let i = 0, len = columns.length; i < len; i++) {
-                const splits = columns[i].split(':');
+            for (var i = 0, len = columns.length; i < len; i++) {
+                var splits = columns[i].split(':');
 
-                const colName = splits.shift(); // First colon split has column name
-                const colValue = splits.join(':'); // Remaining part is data (Required for time related data)
+                var colName = splits.shift(); // First colon split has column name
+                var colValue = splits.join(':'); // Remaining part is data (Required for time related data)
 
-                // eslint-disable-next-line no-useless-escape
-                const match1 = colValue.match(/\[[^[]*]/g);
-                const match2 = colValue.match(/([a-z0-9-_:'"]*,)*/i);
+                var match1 = colValue.match(/\[[^[]*]/g);
+                var match2 = colValue.match(/([a-z0-9-_:'"]*,)*/i);
 
-                let colValues;
+                var colValues;
 
                 if (match1) {
                     colValues = match1;
@@ -211,20 +211,20 @@ function getExample (func, isWindowFunctions) {
                     colValues = colValue.split(',');
                 }
 
-                for (let j = 0, jlen = colValues.length; j < jlen; j++) {
+                for (var j = 0, jlen = colValues.length; j < jlen; j++) {
                     fragment1.appendChild(createElement('tr', {}, createElement('td', { class: 'value' }, colValues[j])));
                 }
 
-                fragment2.appendChild(createElement('table', { class: 'zsl_formula_helpparams zsl_mB15' }, [
+                fragment2.appendChild(createElement('table', { class: 'formula_helpparams mB15' }, [
                     createElement('tr', {}, createElement('th', { class: 'label' }, colName)),
                     fragment1
                 ]));
             }
         }
 
-        for (let i = 0, len = functions.length; i < len; i ++) {
+        for (var i = 0, len = functions.length; i < len; i ++) {
             if (functions[i].result) {
-                const example = createElement('tr', {}, [
+                var example = createElement('tr', {}, [
                     createElement('td', {}, functions[i].function),
                     createElement('td', {}, functions[i].result)
                 ]);
@@ -245,22 +245,22 @@ function getExample (func, isWindowFunctions) {
             }
         }
 
-        const exampleHeader = createElement('tr', {}, createElement('th', {}, i18nUtil('zs.client.common.function')));
+        var exampleHeader = createElement('tr', {}, createElement('th', {}, 'Function'));
 
         if (functions[0].result) {
-            exampleHeader.appendChild(createElement('th', {}, i18nUtil('zs.client.common.result')));
+            exampleHeader.appendChild(createElement('th', {}, 'Result'));
         } else if (functions[0].sort || functions[0].group) {
-            exampleHeader.appendChild(createElement('th', {}, i18nUtil('zs.client.dataprep.transform.formula.window.sortrows')));
-            exampleHeader.appendChild(createElement('th', {}, i18nUtil('zs.client.dataprep.transform.formula.window.grouprows')));
+            exampleHeader.appendChild(createElement('th', {}, 'Sort rows by'));
+            exampleHeader.appendChild(createElement('th', {}, 'Group rows by'));
         }
 
-        const exampleTable = createElement('table', { class: 'zsl_formula_exampletable' }, [
+        var exampleTable = createElement('table', { class: 'formula_exampletable' }, [
             exampleHeader,
             fragment3
         ]);
 
         if (isWindowFunctions === true) {
-            exampleTable.classList.add('zsl_per100');
+			exampleTable.style.width = '100%';
         }
 
         fragment2.appendChild(exampleTable);
@@ -272,10 +272,10 @@ function getExample (func, isWindowFunctions) {
 }
 
 function getInputData (func) {
-    const input = func.input;
+    var input = func.input;
 
     if (input && input.length > 0) {
-        const fragment = document.createDocumentFragment();
+        var fragment = document.createDocumentFragment();
 
         fragment.appendChild(
             createElement('tr', {}, [
@@ -285,7 +285,7 @@ function getInputData (func) {
             ])
         );
 
-        for (let i = 1, len = input.length; i < len; i++) {
+        for (var i = 1, len = input.length; i < len; i++) {
             fragment.appendChild(
                 createElement('tr', {}, [
                     createElement('td', {}, input[i][0]),
@@ -295,17 +295,17 @@ function getInputData (func) {
             );
         }
 
-        return createElement('table', { class: 'zsl_formula_exampletable zsl_per100' }, fragment);
+        return createElement('table', { class: 'formula_exampletable', style: 'width: 100%' }, fragment);
     } else {
         return null;
     }
 }
 
 function getOutputData (func) {
-    const output = func.output;
+    var output = func.output;
 
     if (output && output.length > 0) {
-        const fragment = document.createDocumentFragment();
+        var fragment = document.createDocumentFragment();
 
         fragment.appendChild(createElement('tr', {}, [
             createElement('th', {}, output[0][0]),
@@ -314,7 +314,7 @@ function getOutputData (func) {
             createElement('th', {}, output[0][3])
         ]));
 
-        for (let i = 1, len = output.length; i < len; i++) {
+        for (var i = 1, len = output.length; i < len; i++) {
             fragment.appendChild(
                 createElement('tr', {}, [
                     createElement('td', {}, output[i][0]),
@@ -325,7 +325,7 @@ function getOutputData (func) {
             );
         }
 
-        return createElement('table', { class: 'zsl_formula_exampletable zsl_per100' }, fragment);
+        return createElement('table', { class: 'formula_exampletable', style: 'width: 100%' }, fragment);
     } else {
         return null;
     }
@@ -381,7 +381,26 @@ function hideLoader() {
 	document.getElementById('loader').classList.add('hide');
 	document.getElementById('pagecontainer').classList.remove('hide');
 }
+/************************** Functions to be modified ****************************** */
+function printFunFunTypes (jsonhelp) {
+	for (var i = 0, len = jsonhelp.length; i < len; i++) {
+		console.log(jsonhelp[i].dispName, "~" , jsonhelp[i].funcType);
+	}
+}
 
+function distinctArgTypes (jsonhelp) {
+	var argTypes = jsonhelp.map(item => item.argTypes);
+	var args = [].concat.apply([], argTypes);
+	var arg_types = args.map(item => item.argType);
+
+	console.log("Param types: ", new Set(arg_types));
+}
+
+function distinctFuncTypes(jsonhelp){
+	var funcTypes = jsonhelp.map(item => item.funcType);
+
+	console.log("Function types:",new Set(funcTypes));
+}
 /******************************* Helper functions *********************************** */
 function createElement(tagName, attributes, childNodes) {
     var element = document.createElement(tagName);

@@ -172,7 +172,10 @@ body {
 .mL5 {
     margin-left: 5px;
 }
-
+.error {
+    background: #d73200;
+    color: #fff;
+}
 .output-html {
     height: 100vh;
     width: 100%;

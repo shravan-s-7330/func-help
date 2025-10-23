@@ -1,0 +1,323 @@
+body {
+    font-family: "Open Sans", Verdana, sans-serif;
+}
+#pagecontainer{
+    visibility: hidden;
+}
+#pagecontainer.visible{
+    visibility: visible;
+}
+.lds-hourglass {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    background: rgba(255,255,255,0.9);
+}
+.lds-hourglass:after {
+    top: 35%;
+    left: 50%;
+    position: absolute;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    margin: 8px;
+    box-sizing: border-box;
+    border: 32px solid #000;
+    border-color: #64dce2 transparent #59cff3 transparent;
+    animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+.CodeMirror{
+    display: inline-block; 
+    width:50%; 
+    height:100vh !important; 
+    border: 1px solid #373737; 
+    padding: 0px;
+    margin-right: 10px;
+}
+#i18npopup{
+    top: -110vh;
+    position: absolute;
+    width:0; 
+    height:0;
+    padding: 0 20px;
+    background: white;
+    box-sizing: border-box;
+}
+#i18npopup.visible{
+    z-index: 9999;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+}
+#popuptitle #label {
+    font-size: 20px;
+    text-align: center;
+}
+#popuptitle{
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+#popuptitle #closebtn{
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    opacity: 0.5;
+    cursor: pointer;
+    font-size: 37px;
+    transform: rotate(45deg);
+}
+#popuptitle #closebtn:hover{
+    opacity: 1;
+}
+#i18nprops{
+    display: block;
+    border: 1px solid #373737; 
+    padding: 0px;
+    width: 100%;
+    margin-top: 10px;
+    height: 80vh;
+}
+#helptextout{
+    display: inline-block; 
+    width:48%; 
+    height:100vh; 
+    border: 1px solid #373737; 
+    overflow: scroll;
+    padding: 10px; 
+    box-sizing: border-box;
+}
+.prybutton{
+    margin: 2px 10px;
+    padding: 7px 18px;
+    background: #1daeec;
+    position: relative;
+    width: 100px;
+    border: none;
+    color: white;
+    font-size: 14px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.formula_helpcontent .h-section {
+    margin: 10px 0;
+}
+.formula_helpcontent .h-label {
+    font-weight: 600;
+}
+.formula_helpcontent .h-val {
+    display: block;
+}
+.formula_helpcontent .h-val p {
+    margin: 0;
+    padding: 2px 0;
+}
+.h-val.syntax {
+    background: #f7f7f7;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    border-radius: 5px;
+}
+.formula_helpsection .cm-function {
+    color: #7c0e8d;
+    font-weight:600;
+}
+.cm-function,
+.cm-column,
+.cm-string,
+.cm-text {
+    font-family: monospace;
+}
+.cm-column {
+    color: #153;
+    background-color: #e3e3e3;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+.cm-string {
+    color: #a11;
+}
+
+.cm-text {
+    color: #153;
+}
+.output-json {
+    height: 100vh;
+    width: 100%;
+    resize: none;
+    border: none;
+    background: none;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.output-html {
+    height: 100vh;
+    width: 100%;
+    padding: 15px;
+}
+
+table.param-table{
+    border-collapse: collapse;
+    font-size: 14px;
+}
+table.param-table th{
+    font-weight: 500;
+    text-align: left;
+    background: #efefef;
+}
+table.param-table th, table.param-table td {
+  border: 1px solid #d4d4d4;
+  padding: 2px 10px;
+}
+table.columntable {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+.exampletable {
+    border: 1px solid #ccc;
+    border-spacing: 0;
+    font-size: 14px;
+}
+.exampletable th{
+    background: #f7f7f7;
+    color: #3c2f80;
+    font-weight: 500;
+    text-align: left;
+}
+.exampletable td, .exampletable th {
+    border-bottom: 1px #ececec solid;
+    padding: 3px 40px 3px 10px;
+}
+.exampletable tr:last-child td {
+    border-bottom: none;
+}
+.exampletable tr td:first-child, .exampletable tr th:first-child{
+    border-right: 1px #d4d4d4 solid;
+}
+
+.hide {
+    display: none !important;
+}
+.show {
+    display: none !important;
+}
+.formula_formula_helpcontent .formula_helpsection {
+    margin: 20px 0;
+    font-size: 14px;
+}
+.f14_bold {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+}
+.formula_helpsyntax {
+    background: #f7f7f7;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    border-radius: 5px;
+    display: block;
+    margin-top: 5px;
+}
+.mT10 {
+    margin-top: 10px;
+}
+.mT5 {
+    margin-top: 5px;
+}
+.mB15 {
+    margin-bottom: 15px;
+}
+.disF_spaceBetween {
+	display: flex;
+    justify-content: space-between;
+}
+.formula_helpsyntax {
+    background: #f7f7f7;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    border-radius: 5px;
+    display: block;
+    margin-top: 5px;
+}
+table.formula_helpparams {
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 5px;
+}
+table.formula_helpparams th, table.formula_helpparams td {
+  border: 1px solid #e3e3e3;
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 18px;
+}
+table.formula_helpparams th {
+    font-weight: 500;
+    text-align: left;
+    background: #efefef;
+    word-break: unset;
+}
+.text_batch_bg {
+    background-color: #84d4f7;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 11px;
+    color: black;
+    width: auto;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    padding: 0 8px;
+}
+.formula_exampletable {
+    border: 1px solid #ccc;
+    border-spacing: 0;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.formula_exampletable td, .formula_exampletable th {
+    border-bottom: 1px #e3e3e3 solid;
+    padding: 3px 40px 3px 10px;
+    border: 1px solid #e3e3e3;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 18px;
+    /*word-break: break-word;*/
+}
+.formula_exampletable th{
+    background: #f7f7f7;
+    /* color: #3c2f80; */
+    font-weight: 500;
+    text-align: left;
+    word-break: unset;
+}
+
+.formula_exampletable tr:last-child td {
+    border-bottom: none;
+}
+
+.formula_exampletable tr td:first-child, .formula_exampletable tr th:first-child{
+    border-right: 1px #e3e3e3 solid;
+}

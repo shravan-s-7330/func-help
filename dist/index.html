@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JSON Editor</title>
+  <link rel="stylesheet" crossorigin href="/assets/index-CCq8glim.css">
+</head>
+
+<body>
+	<div id="loader" class="lds-hourglass"></div>
+	<div id="pagecontainer" style="display: flex;">
+		<textarea id="helptext"></textarea>
+		<div id="helptextout"></div>
+		<div style="width:125px">
+			<button class="prybutton" onclick="showI18N()">Get I18N</button>
+			<button class="prybutton" onclick="generatePreview()">Preview</button>
+		</div>
+	</div>
+	<div id="i18npopup">
+		<div id="popuptitle"><div id="label">I18N keys</div><div id="closebtn" onclick="closepopup()">+</div></div>
+		<textarea id="i18nprops" readonly spellcheck="false"></textarea>
+	</div>
+</body>
+
+<script src="funchelp.js"></script>
+<script src="codemirror/lib/codemirror.js"></script>
+<script src="jsonlint/lib/jsonlint.js"></script>
+<script src="codemirror/mode/javascript/javascript.js"></script>
+<script src="codemirror/addon/lint/lint.js"></script>
+<script src="codemirror/addon/lint/json-lint.js"></script>
+<script src="codemirror/addon/search/search.js"></script>
+<script src="codemirror/addon/search/searchcursor.js"></script>
+<script src="codemirror/addon/search/matchesonscrollbar.js"></script>
+<script src="codemirror/addon/dialog/dialog.js"></script>
+<script src="codemirror/addon/scroll/simplescrollbars.js"></script>
+<script src="codemirror/addon/scroll/annotatescrollbar.js"></script>
+<script src="codemirror/addon/edit/matchbrackets.js"></script>
+
+<script type="text/javascript">	
+var editor;
+var xhttp = new XMLHttpRequest();
+
+xhttp.onreadystatechange = function() {
+	if (this.readyState === 4 && this.status === 200) {
+		var helpText = document.getElementById('helptext');
+		var formattedResponse = this.response;
+
+		helpText.innerHTML = formattedResponse;
+
+		editor = CodeMirror.fromTextArea(helpText, {
+			lineNumbers: true,
+			mode: "application/ld+json",
+		    gutters: ["CodeMirror-lint-markers"],
+		    lint: true,
+		    theme: "blackboard",
+		    extraKeys: {"Alt-F": "findPersistent"},
+		    scrollbarStyle: "overlay",
+		    matchBrackets: true
+		});
+
+		// editor.addEventListener('change', debounce(function(evt){
+		// 	renderJSON(JSON.parse(editor.getDoc().getValue()));
+		// }, 1000));
+
+		renderJSON(this.response);
+		hideLoader();
+	}
+};
+
+xhttp.open("GET", "testjson.json", true);
+xhttp.send();
+</script>
+</html>
